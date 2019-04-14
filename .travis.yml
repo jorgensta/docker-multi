@@ -15,5 +15,10 @@ after_success:
   - docker build -t jorgensta/server ./server
   - docker build -t jorgensta/worker ./worker
   # first login to Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # take those images and push them to dockerhub
+  - docker push jorgensta/client
+  - docker push jorgensta/nginx
+  - docker push jorgensta/server
+  - docker push jorgensta/worker
 
