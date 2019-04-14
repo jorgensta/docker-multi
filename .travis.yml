@@ -1,0 +1,19 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t jorgensta/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run jorgensta/react-test yarn test -- --coverage
+
+after_success:
+  - docker build -t jorgensta/client ./client
+  - docker build -t jorgensta/nginx ./nginx
+  - docker build -t jorgensta/server ./server
+  - docker build -t jorgensta/worker ./worker
+  # first login to Docker CLI
+  # take those images and push them to dockerhub
+
